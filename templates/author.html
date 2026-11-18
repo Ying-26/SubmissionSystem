@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作者投稿管理</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, "Noto Sans TC", sans-serif;
+            background: #f5f6f8;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            font-size: 19px;
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: #f8f9fb;
+            color: #666;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        th, td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .editing {
+            background: #fff4df;
+            color: #a66b00;
+        }
+
+        .reviewing {
+            background: #eaf2ff;
+            color: #356ac3;
+        }
+
+        .approved {
+            background: #e7f7ed;
+            color: #23834b;
+        }
+
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 8px 13px;
+            cursor: pointer;
+            font-size: 13px;
+            margin: 2px;
+        }
+
+        .primary {
+            background: #356ac3;
+            color: white;
+            padding: 10px 17px;
+        }
+
+        .edit {
+            background: #edf2fa;
+            color: #356ac3;
+        }
+
+        .delete {
+            background: #fff0f0;
+            color: #d64545;
+        }
+
+        .submit {
+            background: #356ac3;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .empty {
+            text-align: center;
+            color: #999;
+            padding: 35px;
+        }
+
+        .footer {
+            margin-top: 25px;
+        }
+
+        .footer a {
+            color: #356ac3;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                margin: 25px auto;
+            }
+
+            .card {
+                overflow-x: auto;
+                padding: 15px;
+            }
+
+            table {
+                min-width: 650px;
+            }
+
+            .header {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div>
+            <h1>作者投稿管理</h1>
+            <p class="subtitle">歡迎回來，璇！管理你的投稿文章。</p>
+        </div>
+
+        <a href="/author/new">
+            <button class="primary">＋ 新增投稿</button>
+        </a>
+    </div>
+
+    <div class="card">
+
+        <div class="card-header">
+            <h2>我的投稿清單</h2>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>稿件類別</th>
+                    <th>稿件標題</th>
+                    <th>審查狀態</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for article in articles %}
+                <tr>
+                    <td>{{ article.category }}</td>
+
+                    <td>{{ article.title }}</td>
+
+                    <td>
+                        {% if article.status == "編輯中" %}
+                            <span class="status editing">編輯中</span>
+                        {% elif article.status == "審查中" %}
+                            <span class="status reviewing">審查中</span>
+                        {% elif article.status == "已通過" %}
+                            <span class="status approved">已通過</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if article.status == "編輯中" %}
+
+                            <a href="/author/edit/{{ article.id }}">
+                                <button class="edit">編輯</button>
+                            </a>
+
+                            <form action="/author/delete/{{ article.id }}"
+                                  method="post"
+                                  style="display:inline;">
+                                <button class="delete"
+                                        type="submit"
+                                        onclick="return confirm('確定要刪除這篇投稿嗎？')">
+                                    刪除
+                                </button>
+                            </form>
+
+                            <form action="/author/submit/{{ article.id }}"
+                                  method="post"
+                                  style="display:inline;">
+                                <button class="submit"
+                                        type="submit"
+                                        onclick="return confirm('確定要送出審查嗎？')">
+                                    送出審查
+                                </button>
+                            </form>
+
+                        {% else %}
+                            <span style="color:#aaa;">無法操作</span>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="4" class="empty">
+                        目前沒有投稿資料
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="footer">
+        <a href="/">← 返回首頁</a>
+    </div>
+
+</div>
+
+</body>
+</html>

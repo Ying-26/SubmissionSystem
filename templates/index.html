@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投稿審查管理系統</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, "Noto Sans TC", sans-serif;
+            background-color: #f5f6f8;
+            color: #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 100px auto;
+            padding: 30px;
+        }
+
+        .header {
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            color: #777;
+            font-size: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .role-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .role-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            text-decoration: none;
+            color: #222;
+            transition: 0.2s;
+        }
+
+        .role-card:hover {
+            transform: translateY(-4px);
+            border-color: #93b4e8;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .role-card h3 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        .role-card p {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .enter {
+            display: inline-block;
+            margin-top: 15px;
+            color: #356ac3;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 50px auto;
+            }
+
+            .role-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>投稿審查管理系統</h1>
+            <p>Submission Management System</p>
+            <p>歡迎使用投稿審查管理系統，請選擇您的使用角色。</p>
+        </div>
+
+        <h2 class="section-title">選擇使用角色</h2>
+
+        <div class="role-container">
+
+            <a href="/author" class="role-card">
+                <h3>作者專區</h3>
+                <p>
+                    管理個人投稿稿件，新增、編輯及提交文章，
+                    隨時查看稿件審查狀態。
+                </p>
+                <span class="enter">進入作者專區 →</span>
+            </a>
+
+            <a href="/editor" class="role-card">
+                <h3>編輯專區</h3>
+                <p>
+                    查看待審查稿件，閱讀投稿內容，
+                    並進行通過或退回審查。
+                </p>
+                <span class="enter">進入編輯專區 →</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

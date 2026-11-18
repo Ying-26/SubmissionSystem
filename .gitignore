@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# 環境變數與密碼
+.env
+.env.*
+!.env.example
+
+# VS Code
+.vscode/
+
+# 資料庫備份
+*.backup
+*.dump
+# 老師原始範例（目前專題未使用）
+routerUse.py
+sessionLogin.py
+students.sql
+www/

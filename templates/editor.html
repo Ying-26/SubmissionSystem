@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>編輯審查管理</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, "Noto Sans TC", sans-serif;
+            background: #f5f6f8;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            font-size: 19px;
+            margin: 0;
+        }
+
+        .count {
+            color: #777;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: #f8f9fb;
+            color: #666;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        th, td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: #eaf2ff;
+            color: #356ac3;
+            font-size: 12px;
+        }
+
+        .view-button {
+            display: inline-block;
+            background: #356ac3;
+            color: white;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .view-button:hover {
+            background: #28549d;
+        }
+
+        .empty {
+            text-align: center;
+            color: #999;
+            padding: 35px;
+        }
+
+        .footer {
+            margin-top: 25px;
+        }
+
+        .footer a {
+            color: #356ac3;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                margin: 25px auto;
+            }
+
+            .card {
+                overflow-x: auto;
+                padding: 15px;
+            }
+
+            table {
+                min-width: 600px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>編輯專區</h1>
+        <p class="subtitle">管理投稿文章，審查並處理待審核稿件。</p>
+    </div>
+
+    <div class="card">
+
+        <div class="card-header">
+            <h2>待審查稿件清單</h2>
+            <span class="count">待審查文章</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>作者</th>
+                    <th>稿件類別</th>
+                    <th>稿件標題</th>
+                    <th>審查狀態</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for article in articles %}
+                <tr>
+                    <td>{{ article.author_name }}</td>
+                    <td>{{ article.category }}</td>
+                    <td>{{ article.title }}</td>
+                    <td>
+                        <span class="status">審查中</span>
+                    </td>
+                    <td>
+                        <a class="view-button"
+                           href="/editor/article/{{ article.id }}">
+                            查看內容
+                        </a>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="5" class="empty">
+                        目前沒有待審查的稿件
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="footer">
+        <a href="/">← 返回首頁</a>
+    </div>
+
+</div>
+
+</body>
+</html>

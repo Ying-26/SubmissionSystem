@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>稿件審查</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, "Noto Sans TC", sans-serif;
+            background: #f5f6f8;
+            color: #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 19px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background: #f8f9fb;
+            border-radius: 8px;
+        }
+
+        .info-label {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .article-title {
+            font-size: 22px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .content {
+            font-size: 15px;
+            line-height: 2;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            color: #444;
+            min-height: 180px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        button {
+            border: none;
+            border-radius: 7px;
+            padding: 11px 22px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .approve {
+            background: #356ac3;
+            color: white;
+        }
+
+        .reject {
+            background: #fff0f0;
+            color: #d64545;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .footer {
+            margin-top: 25px;
+        }
+
+        .footer a {
+            color: #356ac3;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 25px auto;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .info {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>稿件審查</h1>
+        <p class="subtitle">閱讀投稿內容，確認稿件是否符合通過標準。</p>
+    </div>
+
+    <div class="card">
+
+        <h2>稿件資訊</h2>
+
+        <div class="info">
+            <div class="info-item">
+                <div class="info-label">作者</div>
+                <div class="info-value">{{ article.author_name }}</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">稿件類別</div>
+                <div class="info-value">{{ article.category }}</div>
+            </div>
+        </div>
+
+        <h2 style="margin-top:30px;">{{ article.title }}</h2>
+
+        <hr style="border:none; border-top:1px solid #eee; margin:25px 0;">
+
+        <h3>文章內容</h3>
+
+        <div class="content">{{ article.content }}</div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>審查處理</h2>
+
+        <p style="color:#777; font-size:14px;">
+            請閱讀完整文章後，選擇審查結果。
+        </p>
+
+        <div class="actions">
+
+            <form action="/editor/approve/{{ article.id }}" method="post">
+                <button class="approve"
+                        type="submit"
+                        onclick="return confirm('確定要通過這篇稿件嗎？')">
+                    ✓ 通過稿件
+                </button>
+            </form>
+
+            <form action="/editor/reject/{{ article.id }}" method="post">
+                <button class="reject"
+                        type="submit"
+                        onclick="return confirm('確定要退回這篇稿件嗎？')">
+                    退回修改
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <a href="/editor">← 返回待審查清單</a>
+    </div>
+
+</div>
+
+</body>
+</html>
